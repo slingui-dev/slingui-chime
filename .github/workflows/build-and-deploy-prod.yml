@@ -28,6 +28,10 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install awscli
+      - name: Move Env To Production
+        run: |
+          rm ./apps/meeting/.env
+          cp ./apps/meeting/.env.production ./apps/meeting/.env
       - name: Set up Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
