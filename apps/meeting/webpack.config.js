@@ -20,14 +20,25 @@ module.exports = {
         exclude: /node_modules/
       },
       {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader']
+        test: /\.(css|sass|scss)$/,
+        sideEffects: true,
+        use: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader'
+          },
+          {
+            loader: 'sass-loader'
+          }
+        ]
       },
       {
         test: /\.(svg)$/,
         type: 'asset/inline'
       },
-      
+
     ]
   },
   resolve: {
@@ -36,6 +47,7 @@ module.exports = {
       react: path.resolve('./node_modules/react'),
       'styled-components': path.resolve('./node_modules/styled-components'),
       'react-dom': path.resolve('./node_modules/react-dom'),
+      'rmwc': path.resolve('./node_modules/rmwc'),
     },
     fallback: {
       fs: false,
@@ -51,7 +63,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      inlineSource: '.(js|css)$',
+      inlineSource: '.(js|css|svg)$',
       template: __dirname + `/app/${app}.html`,
       filename: __dirname + `/dist/${app}.html`,
       inject: 'head',

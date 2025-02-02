@@ -2,34 +2,21 @@
 // SPDX-License-Identifier: MIT-0
 
 import React from 'react';
-import {
-  Flex,
-  SecondaryButton,
-} from 'amazon-chime-sdk-component-library-react';
 
 import MeetingForm from '../MeetingForm';
-import SIPMeeting from '../SIPMeeting';
-import useToggle from '../../hooks/useToggle';
-import SIPMeetingProvider from '../../providers/SIPMeetingProvider';
 import { StyledDiv, StyledWrapper } from './Styled';
+import { useAppState } from '../../providers/AppStateProvider';
+import MeetingSelection from '../../components/MeetingSelection/MeetingSelection';
 
 const MeetingFormSelector: React.FC = () => {
-  const { isActive, toggle } = useToggle(false);
-  const formToShow = isActive ? (
-    <SIPMeetingProvider>
-      <SIPMeeting />
-    </SIPMeetingProvider>
-  ) : (
-    <MeetingForm />
-  );
-  const buttonText = isActive ? 'Join without SIP' : 'Join via SIP';
+  const {
+    meetingId
+  } = useAppState();
+  const formToShow = meetingId.length > 0 ? <MeetingForm /> : <MeetingSelection></MeetingSelection>;
 
   return (
     <StyledWrapper>
       <StyledDiv>{formToShow}</StyledDiv>
-      <Flex container layout="fill-space-centered" style={{ padding: '2rem' }}>
-        <SecondaryButton label={buttonText} onClick={toggle} />
-      </Flex>
     </StyledWrapper>
   );
 };

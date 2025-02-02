@@ -145,8 +145,11 @@ const MeetingForm: React.FC = () => {
   return (
     <form>
       <Heading tag="h1" level={4} css="margin-bottom: 1rem">
-        Join a meeting
+        Join a meeting: 
       </Heading>
+      <div
+        style={{display: 'none'}}
+        >
       <FormField
         field={Input}
         label="Meeting Id"
@@ -182,6 +185,7 @@ const MeetingForm: React.FC = () => {
           }
         }}
       />
+      </div>
       <RegionSelection setRegion={setRegion} region={region} />
       <FormField
         field={Checkbox}

@@ -12,6 +12,7 @@ interface Props {
 export const StyledLayout = styled.main<Props>`
   height: 100vh;
   width: 100%;
+  
 
   display: grid;
 

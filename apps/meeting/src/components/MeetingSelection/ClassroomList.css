@@ -1,0 +1,37 @@
+.classroom-container {
+    font-family: Syne, sans-serif;
+    margin-top: 24px;
+}
+
+.loading,
+.error {
+    text-align: center;
+    font-size: 18px;
+}
+
+.classroom-list {
+    list-style: none;
+    padding: 0;
+}
+
+.classroom-item {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+    strong {
+
+        font-weight: 600;
+        margin-right: 12px;
+        font-size: 18px;
+    }
+    &:hover{
+        background-color: #0001;
+    }
+}
+
+.classroom-icon,
+.info-icon {
+    margin-right: 10px;
+}

@@ -7,6 +7,7 @@ export const StyledLayout = styled.main`
   display: block;
   min-height: 100%;
   margin: auto;
+  background: #F2FBFD;
 
   @media (min-width: 600px) and (min-height: 600px) {
     display: flex;

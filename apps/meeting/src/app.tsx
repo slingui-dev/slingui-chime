@@ -17,6 +17,12 @@ import Notifications from './containers/Notifications';
 import MeetingProviderWrapper from './containers/MeetingProviderWrapper';
 import meetingConfig from './meetingConfig';
 import { useAuthContext } from './hooks/useAuthContext';
+import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query';
+// Create a client
+const queryClient = new QueryClient()
 
 const App: FC = () => {
   const { isAuthenticated, isLoading, error, auth } = useAuthContext();
@@ -38,18 +44,20 @@ const App: FC = () => {
   }
   return (
     <Router>
-      <LoggerProvider logger={meetingConfig.logger}>
-        <AppStateProvider>
-          <Theme>
-            <NotificationProvider>
-              <Notifications />
-              <ErrorProvider>
-                <MeetingProviderWrapper />
-              </ErrorProvider>
-            </NotificationProvider>
-          </Theme>
-        </AppStateProvider>
-      </LoggerProvider>
+      <QueryClientProvider client={queryClient}>
+        <LoggerProvider logger={meetingConfig.logger}>
+          <AppStateProvider>
+            <Theme>
+              <NotificationProvider>
+                <Notifications />
+                <ErrorProvider>
+                  <MeetingProviderWrapper />
+                </ErrorProvider>
+              </NotificationProvider>
+            </Theme>
+          </AppStateProvider>
+        </LoggerProvider>
+      </QueryClientProvider>
     </Router>
   );
 };
