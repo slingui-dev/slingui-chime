@@ -1,0 +1,44 @@
+name: Build and Deploy Production
+
+on:
+  push:
+    tags:
+      - "**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Install dependencies in apps/meeting
+        run: npm ci
+        working-directory: apps/meeting
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::883739838031:role/slingui-production-pipeline-la-PipelineRoleDCFDBB91-Xpxkq0BRzguj
+          role-session-name: default
+          aws-region: us-east-1
+
+      - name: Install AWS SAM CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y awscli
+          pip install aws-sam-cli
+
+      - name: Run deploy script
+        run: node deploy.js
+        working-directory: apps/meeting/serverless

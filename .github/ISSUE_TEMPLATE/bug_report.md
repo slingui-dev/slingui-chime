@@ -1,13 +1,11 @@
 ---
 name: Bug report
-about: 'Report unexpected behavior with our demos. '
+about: Create a report to help us improve
 title: ''
-labels: Bug
+labels: bug
 assignees: ''
----
 
-**Demo**
-Specify the name of the demo that you encountered the bug.
+---
 
 **Describe the bug**
 A clear and concise description of what the bug is.
@@ -25,16 +23,12 @@ A clear and concise description of what you expected to happen.
 **Screenshots**
 If applicable, add screenshots to help explain your problem.
 
-**Desktop (please complete the following information):**
- - OS: [e.g. iOS]
- - Browser [e.g. chrome, safari]
- - Version [e.g. 22]
-
-**Smartphone (please complete the following information):**
- - Device: [e.g. iPhone6]
- - OS: [e.g. iOS8.1]
- - Browser [e.g. stock browser, safari]
- - Version [e.g. 22]
+**Environment (please complete the following information):**
+ - OS: [e.g. Ubuntu 18.04]
+ - Browser: [e.g. Chrome 80, Firefox 72]
+ - App Version: [e.g. 0.1.0]
+ - SDK Version: [e.g 2.1.0]
+ - Node.js version: [e.g. 12.14.1]
 
 **Additional context**
 Add any other context about the problem here.
