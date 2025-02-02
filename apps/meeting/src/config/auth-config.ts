@@ -8,4 +8,7 @@ export const authConfig = {
     scope: "openid profile",
     silentRenew: true,
     useRefreshToken: true,
+    onSigninCallback: () => {
+        window.history.replaceState({}, document.title, window.location.pathname);
+    },
 };
