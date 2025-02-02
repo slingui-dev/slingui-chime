@@ -3,7 +3,7 @@ name: Build and Deploy Production
 permissions:
   id-token: write
   contents: read
-  
+
 on:
   push:
     tags:
@@ -36,11 +36,16 @@ jobs:
           role-to-assume: arn:aws:iam::883739838031:role/slingui-production-pipeline-la-PipelineRoleDCFDBB91-Xpxkq0BRzguj
           role-session-name: default
           aws-region: us-east-1
+      - name: Install AWS CLI
+        run: |
+          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+          unzip awscliv2.zip
+          sudo ./aws/install
+          aws --version
 
       - name: Install AWS SAM CLI
         run: |
           sudo apt-get update
-          sudo apt-get install -y awscli
           pip install aws-sam-cli
 
       - name: Run deploy script
