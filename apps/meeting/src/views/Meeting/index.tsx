@@ -16,12 +16,14 @@ import { VideoTileGridProvider } from '../../providers/VideoTileGridProvider';
 import { useAppState } from '../../providers/AppStateProvider';
 import { DataMessagesProvider } from '../../providers/DataMessagesProvider';
 import MeetingStatusNotifier from '../../containers/MeetingStatusNotifier';
+import useMeetingEventLogger from '../../hooks/useMeetingEventLogger';
 
 const MeetingView = (props: { mode: MeetingMode }) => {
   useMeetingEndRedirect();
   const { showNavbar, showRoster, showChat } = useNavigation();
   const { mode } = props;
   const { layout } = useAppState();
+  useMeetingEventLogger();
 
   return (
     <UserActivityProvider>
