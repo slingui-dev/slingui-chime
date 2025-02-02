@@ -6,6 +6,8 @@ permissions:
 
 on:
   push:
+    branchs:
+      - main
     tags:
       - "**"
 
