@@ -6,8 +6,9 @@ permissions:
 
 on:
   push:
-    branchs:
+    branches:
       - main
+      - 'releases/**'
     tags:
       - "**"
 
