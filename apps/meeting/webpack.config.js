@@ -4,6 +4,7 @@
 const path = require('path');
 const InlineChunkHtmlPlugin = require('react-dev-utils/InlineChunkHtmlPlugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 const app = 'meeting';
 
@@ -55,6 +56,7 @@ module.exports = {
       filename: __dirname + `/dist/${app}.html`,
       inject: 'head',
     }),
+    new Dotenv(),
     new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [new RegExp(`${app}`)]),
   ],
   devServer: {
@@ -76,9 +78,9 @@ module.exports = {
       overlay: false,
     },
     hot: false,
-    host: '0.0.0.0',
-    port: 9000,
-    https: true,
+    host: 'localhost',
+    port: 3000,
+    https: false,
     open: true,
   },
 };

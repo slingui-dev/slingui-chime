@@ -3,6 +3,7 @@
 
 const config = require('./webpack.config.js');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 const app = 'meeting';
 
@@ -16,5 +17,6 @@ module.exports = Object.assign(config, {
       filename: __dirname + `/dist/${app}.html`,
       inject: 'head',
     }),
+    new Dotenv(),
   ],
 });

@@ -16,24 +16,43 @@ import ErrorProvider from './providers/ErrorProvider';
 import Notifications from './containers/Notifications';
 import MeetingProviderWrapper from './containers/MeetingProviderWrapper';
 import meetingConfig from './meetingConfig';
+import { useAuthContext } from './hooks/useAuthContext';
 
-const App: FC = () => (
-  <Router>
-    <LoggerProvider logger={meetingConfig.logger}>
-      <AppStateProvider>
-        <Theme>
-          <NotificationProvider>
-            <Notifications />
-            <ErrorProvider>
-              <MeetingProviderWrapper />
-            </ErrorProvider>
-          </NotificationProvider>
-        </Theme>
-      </AppStateProvider>
-    </LoggerProvider>
-  </Router>
-);
+const App: FC = () => {
+  const { isAuthenticated, isLoading, error, auth } = useAuthContext();
 
+  switch (auth.activeNavigator) {
+    case "signinSilent":
+      return <div>Signing you in...</div>;
+    case "signoutRedirect":
+      return <div>Signing you out...</div>;
+  }
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+  if (!isAuthenticated) {
+    return <div>Authenticating...</div>;
+  }
+  return (
+    <Router>
+      <LoggerProvider logger={meetingConfig.logger}>
+        <AppStateProvider>
+          <Theme>
+            <NotificationProvider>
+              <Notifications />
+              <ErrorProvider>
+                <MeetingProviderWrapper />
+              </ErrorProvider>
+            </NotificationProvider>
+          </Theme>
+        </AppStateProvider>
+      </LoggerProvider>
+    </Router>
+  );
+};
 const Theme: React.FC<PropsWithChildren> = ({ children }) => {
   const { theme } = useAppState();
 
