@@ -6,8 +6,8 @@ import { SDK_LOG_LEVELS } from './constants';
 import { MeetingConfig } from './types';
 
 const urlParams = new URLSearchParams(window.location.search);
-const queryLogLevel = urlParams.get('logLevel') || 'info';
-const logLevel = SDK_LOG_LEVELS[queryLogLevel] || SDK_LOG_LEVELS.info;
+const queryLogLevel = urlParams.get('logLevel') || 'error';
+const logLevel = SDK_LOG_LEVELS[queryLogLevel] || SDK_LOG_LEVELS.error;
 
 const meetingConfig: MeetingConfig = {
   simulcastEnabled: false,
