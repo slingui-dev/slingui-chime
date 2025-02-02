@@ -47,5 +47,5 @@ jobs:
           aws-region: us-east-1
 
       - name: Run deploy script
-        run: node deploy.js
+        run: node ./deploy.js -r us-east-1 -b slingui-class -s SlinguiChime
         working-directory: apps/meeting/serverless
