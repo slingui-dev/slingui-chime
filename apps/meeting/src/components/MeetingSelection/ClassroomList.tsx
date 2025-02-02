@@ -56,12 +56,12 @@ const ClassroomList: React.FC = () => {
             ) : (
                 <ul className="classroom-list">
                     {data?.results.map((classroom) => (
-                        <li key={classroom._id} className="classroom-item">
-                            <div className="classroom-info" onClick={() => {
-                                console.log(profile);
-                                setLocalUserName(profile.firstName);
-                                setMeetingId(classroom.roomName);
-                            }}>
+                        <li key={classroom._id} className="classroom-item" onClick={() => {
+                            console.log(profile);
+                            setLocalUserName(profile.firstName);
+                            setMeetingId(classroom.roomName);
+                        }}>
+                            <div className="classroom-info">
                                 <strong>{classroom.name}</strong>
                                 <span>{classroom.roomName}</span>
                             </div>
