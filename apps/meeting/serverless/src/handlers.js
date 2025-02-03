@@ -19,7 +19,7 @@ const logGroupName = process.env.BROWSER_LOG_GROUP_NAME;
 
 // Create a unique id
 function uuid() {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
     const r = (Math.random() * 16) | 0,
       v = c === 'x' ? r : (r & 0x3) | 0x8;
     return v.toString(16);
@@ -69,6 +69,19 @@ const getAttendee = async (title, attendeeId) => {
   return result.Item.Name.S;
 };
 
+// Função para verificar se a reunião existe na AWS
+const checkMeetingExistsAWS = async (meetingId) => {
+  try {
+    await chimeSDKMeetings.getMeeting({ MeetingId: meetingId });
+    return true;
+  } catch (error) {
+    if (error.name === 'NotFoundException') {
+      return false;
+    }
+    throw error;
+  }
+};
+
 // Add attendee in the attendee table
 const putAttendee = async (title, attendeeId, attendeeName) => {
   await ddb.putItem({
@@ -110,8 +123,21 @@ exports.join = async (event, context, callback) => {
     callback(null, response);
     return;
   }
-
   let meetingInfo = await getMeeting(title);
+  // Se existir no DynamoDB, verificar se realmente existe na AWS
+  if (meetingInfo) {
+    const existsInAWS = await checkMeetingExistsAWS(meetingInfo.Meeting.MeetingId);
+    if (!existsInAWS) {
+      console.info('Meeting not found in AWS, removing from DynamoDB and recreating.');
+      await ddb.deleteItem({
+        TableName: meetingsTableName,
+        Key: {
+          Title: { S: title },
+        },
+      });
+      meetingInfo = null;
+    }
+  }
 
   if (!meetingInfo) {
     const request = {
@@ -244,9 +270,8 @@ exports.logs = async (event, context) => {
         const timestampIso = new Date(log.timestampMs).toISOString();
         let message = `${body.appName} ${timestampIso} [${log.sequenceNumber}] [${log.logLevel}]`;
         if (body.meetingId && body.attendeeId) {
-          message = `${message} [meetingId: ${body.meetingId.toString()}] [attendeeId: ${body.attendeeId}]: ${
-            log.message
-          }`;
+          message = `${message} [meetingId: ${body.meetingId.toString()}] [attendeeId: ${body.attendeeId}]: ${log.message
+            }`;
         } else {
           message = `${message}: ${log.message}`;
         }
