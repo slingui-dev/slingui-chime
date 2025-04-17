@@ -185,7 +185,6 @@ const MeetingForm: React.FC = () => {
           }
         }}
       />
-      </div>
       <RegionSelection setRegion={setRegion} region={region} />
       <FormField
         field={Checkbox}
@@ -265,6 +264,8 @@ const MeetingForm: React.FC = () => {
         onChange={toggleMeetingJoinDeviceSelection}
         infoText="Please select the devices manually to successfully join a meeting"
       />
+      </div>
+
       <Flex container layout="fill-space-centered" style={{ marginTop: '2.5rem' }}>
         {isLoading ? <Spinner /> : <PrimaryButton label="Continue" onClick={handleJoinMeeting} />}
       </Flex>

@@ -52,7 +52,7 @@ const ClassroomList: React.FC = () => {
     return (
         <div className="classroom-container">
             {data?.results.length === 0 ? (
-                <div className="no-classrooms">No classrooms available.</div>
+                <div className="no-classrooms">No classes available.</div>
             ) : (
                 <ul className="classroom-list">
                     {data?.results.map((classroom) => (

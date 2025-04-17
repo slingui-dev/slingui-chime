@@ -7,13 +7,11 @@ export const StyledWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  background: #F7F9FF;
 
   @media (min-width: 600px) and (min-height: 600px) {
     min-height: 35.75rem;
     max-width: 30rem;
     border-radius: 16px;
-    border: 1px #C1C7CE solid;
   }
 `;
 

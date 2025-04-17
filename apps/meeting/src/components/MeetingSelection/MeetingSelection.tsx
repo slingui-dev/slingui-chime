@@ -15,10 +15,23 @@ const Logo = () => (<svg width="104" height="38" viewBox="0 0 104 38" fill="none
 const MeetingSelection: React.FC = () => {
   return (
     <div>
+    <button
+      onClick={() => window.location.href = 'https://classroom.slingui.com'}
+      style={{
+        marginBottom: '12px',
+        padding: '8px 16px',
+        backgroundColor: '#f0f0f0',
+        border: '1px solid #ccc',
+        borderRadius: '4px',
+        cursor: 'pointer'
+      }}
+    >
+      Back
+    </button>
       <div style={{ marginBottom: '12px' }}>
         <Logo />
       </div>
-      <h2>Select a class:</h2>
+      <h2>Next classes:</h2>
       <ClassroomList />
     </div>
   );
