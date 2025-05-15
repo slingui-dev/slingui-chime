@@ -1,0 +1,289 @@
+// src/styles/theme.scss
+
+// Variáveis de texto
+$dark-primary-text: rgba(0, 0, 0, 0.87);
+$light-primary-text: #ffffff;
+
+// Paleta primária
+$primary-color: #003543;
+$primary-palette: (
+  0: #ffffff,
+  1: #f4fff6,
+  50: #ddf5ff,
+  100: #b6eaff,
+  200: #86d1ec,
+  300: #6ab5d0,
+  400: #4e9ab4,
+  500: #2f8099,
+  600: #00677f,
+  700: $primary-color,
+  800: #001f28,
+  900: #000000
+);
+
+// Paleta secundária
+$secondary-color: #006c4a;
+$secondary-palette: (
+  0: #ffffff,
+  1: #f4fff6,
+  50: #beffdc,
+  100: #a0f4ca,
+  200: #81d8ae,
+  300: #66bc94,
+  400: #4aa07a,
+  500: #2d8662,
+  600: $secondary-color,
+  700: #00452e,
+  800: #003825,
+  900: #002114
+);
+
+// Paleta de sucesso (success)
+$success-color: #006c4a;
+$success-palette: $secondary-palette; // Reutiliza a secundária, conforme o original
+
+// Paleta terciária
+$tertiary-color: #795900;
+$tertiary-palette: (
+  1: #fffbff,
+  50: #ffefd5,
+  100: #ffdfa0,
+  200: #ecc165,
+  300: #cea64d,
+  400: #b18b36,
+  500: #95721e,
+  600: $tertiary-color,
+  700: #5c4300,
+  800: #402d00,
+  900: #261a00
+);
+
+// Paleta de erro
+$error-color: #b71752;
+$error-palette: (
+  1: #fffbff,
+  50: #ffecee,
+  100: #ffd9df,
+  200: #ffb1c0,
+  300: #ff85a1,
+  400: #fc5183,
+  500: #d9366a,
+  600: $error-color,
+  700: #90003c,
+  800: #660029,
+  900: #3f0016
+);
+
+// Paleta neutra
+$neutral-color: #2f3038;
+$neutral-palette: (
+  1: #fcfcff,
+  50: #f4f0ef,
+  100: #e5e2e1,
+  200: #c9c6c5,
+  300: #adaaaa,
+  400: #929090,
+  500: #787776,
+  600: #5f5e5e,
+  700: #484646,
+  800: $neutral-color,
+  900: #1c1b1b
+);
+
+// Paleta neutra variante
+$neutral-variant-color: #2f3038;
+$neutral-variant-palette: (
+  1: #f8f9fc,
+  50: #f4f0ef,
+  100: #e5e2e1,
+  200: #c9c6c5,
+  300: #adaaaa,
+  400: #929090,
+  500: #787776,
+  600: #5f5e5e,
+  700: #484646,
+  800: $neutral-variant-color,
+  900: #1a1b23
+);
+
+// Superfícies
+$surface: map-get($neutral-variant-palette, 1);
+$surface-base-color: map-get($primary-palette, 200);
+$surface-1: mix($surface-base-color, $surface, 5%);
+$surface-2: mix($surface-base-color, $surface, 8%);
+$surface-3: mix($surface-base-color, $surface, 11%);
+$surface-4: mix($surface-base-color, $surface, 12%);
+$surface-5: mix($surface-base-color, $surface, 15%);
+
+$surface-dark: map-get($neutral-variant-palette, 900);
+$surface-dark-1: mix(map-get($primary-palette, 100), $surface-dark, 5%);
+$surface-dark-2: mix(map-get($primary-palette, 100), $surface-dark, 8%);
+$surface-dark-3: mix(map-get($primary-palette, 100), $surface-dark, 11%);
+$surface-dark-4: mix(map-get($primary-palette, 100), $surface-dark, 12%);
+
+// Configuração do tema RMWC
+:root {
+  // Cores primárias e secundárias
+  --mdc-theme-primary: #{$primary-color};
+  --mdc-theme-secondary: #{$secondary-color};
+  --mdc-theme-error: #{$error-color};
+  --mdc-theme-surface: #{$surface};
+  --mdc-theme-surface-border: #{$surface-3};
+  --mdc-theme-background: #{$surface};
+  --mdc-theme-on-primary: #{$light-primary-text};
+  --mdc-theme-on-secondary: #{$light-primary-text};
+  --mdc-theme-on-error: #{$light-primary-text};
+  --mdc-theme-on-surface: #{$dark-primary-text};
+
+  --mdc-typography-font-family: 'Syne', sans-serif;
+
+  // Cores customizadas
+  --mdc-theme-success: #{$success-color};
+  --mdc-theme-tertiary: #{$tertiary-color};
+
+  .mdc-card {
+    box-shadow: none;
+    border-radius: 16px;
+    border: 1px solid var(--mdc-theme-surface-3, rgba(0, 0, 0, 0.12)); // #adaaaa
+  }
+}
+
+// Tema dark
+.dark {
+  // Cores primárias e secundárias
+  --mdc-theme-primary: #{map-get($primary-palette, 600)}; // #00677f
+  --mdc-theme-secondary: #{map-get($secondary-palette, 600)}; // #006c4a
+  --mdc-theme-error: #{map-get($error-palette, 600)}; // #b71752
+  --mdc-theme-success: #{map-get($success-palette, 600)}; // #006c4a
+  --mdc-theme-tertiary: #{map-get($tertiary-palette, 600)}; // #795900
+
+  // Superfície e fundo
+  --mdc-theme-surface: #{$surface-dark}; // #1a1b23
+  --mdc-theme-background: #{$surface-dark}; // #1a1b23
+  --mdc-theme-surface-border: #{$surface-dark-3};
+
+  --mdc-typography-font-family: 'Syne', sans-serif;
+
+  // Cores de texto
+  --mdc-theme-on-primary: #{$light-primary-text}; // #ffffff
+  --mdc-theme-on-secondary: #{$light-primary-text}; // #ffffff
+  --mdc-theme-on-error: #{$light-primary-text}; // #ffffff
+  --mdc-theme-on-surface: #{$light-primary-text}; // #ffffff (para contraste em fundo escuro)
+
+  // Superfícies elevadas
+  --mdc-theme-surface-1: #{$surface-dark-1}; // Mistura com primary 100
+  --mdc-theme-surface-2: #{$surface-dark-2};
+  --mdc-theme-surface-3: #{$surface-dark-3};
+  --mdc-theme-surface-4: #{$surface-dark-4};
+
+  // Ajustes para componentes específicos
+  .mdc-button {
+    font-family: 'Syne', sans-serif;
+    // Ajustar cor do texto para botões no tema dark
+    color: #{$light-primary-text};
+
+    // Ajustar botões preenchidos
+    &.mdc-button--raised,
+    &.mdc-button--unelevated {
+      background-color: #{map-get($primary-palette, 600)};
+      color: #{$light-primary-text};
+    }
+
+    // Ajustar botões outlined
+    &.mdc-button--outlined {
+      border-color: #{map-get($neutral-variant-palette, 300)}; // #adaaaa
+      color: #{$light-primary-text};
+    }
+  }
+
+  .mdc-typography {
+    font-family: 'Syne', sans-serif;
+    color: #{$light-primary-text}; // Texto claro para contraste
+  }
+
+  // Ajustes para outros componentes Material
+  .mdc-card {
+    background-color: #{$surface-dark};
+    color: #{$light-primary-text};
+    box-shadow: none;
+    border: 1px solid var(--mdc-theme-surface-3, rgba(0, 0, 0, 0.12)); // #adaaaa
+  }
+
+  .mdc-text-field {
+    --mdc-theme-on-surface: #{$light-primary-text};
+
+    .mdc-text-field__input {
+      color: #{$light-primary-text};
+    }
+
+    .mdc-line-ripple {
+      --mdc-theme-primary: #{map-get($primary-palette, 600)};
+    }
+
+    .mdc-floating-label {
+      color: #{map-get($neutral-variant-palette, 300)}; // #adaaaa
+    }
+  }
+
+  .mdc-checkbox,
+  .mdc-radio,
+  .mdc-switch {
+    --mdc-theme-secondary: #{map-get($primary-palette, 600)};
+  }
+
+  // Ajustar listas
+  .mdc-list {
+    .mdc-list-item {
+      color: #{$light-primary-text};
+
+      &.mdc-list-item--selected,
+      &.mdc-list-item--activated {
+        color: #{map-get($primary-palette, 600)};
+      }
+
+
+    }
+
+  }
+
+  .mdc-deprecated-list-item {
+    color: #fff !important;
+  }
+
+  .mdc-deprecated-list-item__graphic {
+    color: #fff !important;
+  }
+
+  .mdc-deprecated-list-item__secondary-text {
+    color: #fff !important;
+  }
+
+  // Ajustar barras de navegação
+  .mdc-top-app-bar,
+  .mdc-drawer {
+    background-color: #{$surface-dark-2};
+    color: #{$light-primary-text};
+  }
+}
+
+// Estilização global para componentes RMWC
+.mdc-button {
+  font-family: 'Syne', sans-serif;
+}
+
+.mdc-typography {
+  font-family: 'Syne', sans-serif;
+}
+
+// Imports dos componentes Material Design
+@import "@material/button/mdc-button";
+@import "@material/icon-button/mdc-icon-button";
+@import "@material/card/mdc-card";
+@import "@material/typography/mdc-typography";
+@import "@material/list/mdc-list";
+@import "@material/dialog/mdc-dialog";
+@import "@material/menu/mdc-menu";
+@import "@material/top-app-bar/mdc-top-app-bar";
+@import "@material/drawer/mdc-drawer";
+@import "@material/checkbox/mdc-checkbox";
+@import "@material/radio/mdc-radio";

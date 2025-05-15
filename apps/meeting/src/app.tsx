@@ -21,6 +21,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query';
+
 // Create a client
 const queryClient = new QueryClient()
 
@@ -67,7 +68,9 @@ const Theme: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <ThemeProvider theme={theme === 'light' ? demoLightTheme : demoDarkTheme}>
       <GlobalStyles />
-      {children}
+      <div className={theme}>
+        {children}
+      </div>
     </ThemeProvider>
   );
 };

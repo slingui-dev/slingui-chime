@@ -1628,7 +1628,7 @@
     "@rmwc/base" "14.3.5"
     "@rmwc/types" "14.3.5"
 
-"@rmwc/base@14.3.5":
+"@rmwc/base@^14.3.5", "@rmwc/base@14.3.5":
   version "14.3.5"
   resolved "https://registry.npmjs.org/@rmwc/base/-/base-14.3.5.tgz"
   integrity sha512-EcbeFKVxDaxbBZ4l5bJm8b3b+USiB9tp0N/tvPj0SBugMp4u2ua1sYnzkJ5nvrcsGZd+/jhQBJPf6ozM9m60rA==
@@ -1640,7 +1640,7 @@
     mutation-observer "^1.0.3"
     tslib "^2.4.0"
 
-"@rmwc/button@14.3.5":
+"@rmwc/button@^14.3.5", "@rmwc/button@14.3.5":
   version "14.3.5"
   resolved "https://registry.npmjs.org/@rmwc/button/-/button-14.3.5.tgz"
   integrity sha512-+YLlGTc5kb7Ng0krJ6GGALcB0r0lndNiqz5r+mZ2OCFo1a2V6efh2rRsrN3sVTB9IjlUn5BXuoxdcorA/9GjWA==
@@ -1810,7 +1810,7 @@
     "@rmwc/ripple" "14.3.5"
     "@rmwc/types" "14.3.5"
 
-"@rmwc/icon@14.3.5":
+"@rmwc/icon@^14.3.5", "@rmwc/icon@14.3.5":
   version "14.3.5"
   resolved "https://registry.npmjs.org/@rmwc/icon/-/icon-14.3.5.tgz"
   integrity sha512-JExrvg6q2nd0BeT254OdOJpUIs/9bbn6brDrKjfxIfoCuwu1lL+xMU7Jw/q4TzH5aSLV6GdUomffuRv1egrRHQ==
@@ -2008,7 +2008,7 @@
     "@rmwc/ripple" "14.3.5"
     "@rmwc/types" "14.3.5"
 
-"@rmwc/theme@14.3.5":
+"@rmwc/theme@^14.3.5", "@rmwc/theme@14.3.5":
   version "14.3.5"
   resolved "https://registry.npmjs.org/@rmwc/theme/-/theme-14.3.5.tgz"
   integrity sha512-u49HvEdkTIdU41F+qscqrBBWnEK7DjqVCUnyH0yo1YUs7NouZet5ay8W174c8whGM/Zt27ITPZEsFrk1sIAx5g==
@@ -2059,7 +2059,7 @@
   resolved "https://registry.npmjs.org/@rmwc/types/-/types-14.3.5.tgz"
   integrity sha512-r1+O6XVwCIV7LvogOw32jffYnRdtKHK/1Ddq0/xzyB/ntvuStFh1DryX0X090ynPtzeMUEDXohb+XANtKs1L7A==
 
-"@rmwc/typography@14.3.5":
+"@rmwc/typography@^14.3.5", "@rmwc/typography@14.3.5":
   version "14.3.5"
   resolved "https://registry.npmjs.org/@rmwc/typography/-/typography-14.3.5.tgz"
   integrity sha512-EOFibbXzHb+aAfoWXh5COt+5ROAEKBCvmwiSJ2RSl3NNL2UtPvVhgetcJbA40xtbZ+k9cNlOGgoxWdovOqnSEw==

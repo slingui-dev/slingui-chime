@@ -1,19 +1,17 @@
 // Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: MIT-0
 
-import React, { ChangeEvent, useContext, useState } from 'react';
+import React, { ChangeEvent, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Checkbox,
   DeviceLabels,
   Flex,
   FormField,
-  Heading,
   Input,
   Modal,
   ModalBody,
   ModalHeader,
-  PrimaryButton,
   Select,
   useMeetingManager,
 } from 'amazon-chime-sdk-component-library-react';
@@ -31,12 +29,92 @@ import { MeetingMode, VideoFiltersCpuUtilization } from '../../types';
 import { MeetingManagerJoinOptions } from 'amazon-chime-sdk-component-library-react/lib/providers/MeetingProvider/types';
 import meetingConfig from '../../meetingConfig';
 
+const collapseStyles: React.CSSProperties = {
+  border: '1px solid var(--mdc-theme-surface-3, rgba(0, 0, 0, 0.12))',
+  borderRadius: '16px', // Aumentado para bordas mais arredondadas (Material 3)
+  marginTop: '1rem',
+  overflow: 'hidden',
+  fontFamily: 'var(--mdc-typography-font-family, Syne, sans-serif)', // Usando Syne do tema
+  backgroundColor: 'var(--mdc-theme-surface, #fff)', // Compatível com tema dark
+};
+
+const headerStyles: React.CSSProperties = {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  padding: '24px',
+  cursor: 'pointer',
+  backgroundColor: 'var(--mdc-theme-surface, #fff)', // Compatível com tema dark
+  color: 'var(--mdc-theme-on-surface, #000)', // Ajustado para on-surface
+  fontSize: 'var(--mdc-typography-subtitle1-font-size, 1rem)',
+  fontWeight: 500,
+  transition: 'background-color 0.2s ease',
+  borderRadius: '16px 16px 0 0', // Arredondamento apenas no topo quando aberto
+};
+
+const contentStyles: React.CSSProperties = {
+  padding: '0 1rem', // Padding inicial zero para animação suave
+  backgroundColor: 'var(--mdc-theme-background, #fafafa)', // Compatível com tema dark
+  maxHeight: '0',
+  overflow: 'hidden',
+  transition: 'max-height 0.3s ease, padding 0.3s ease',
+};
+
+const contentOpenStyles: React.CSSProperties = {
+  maxHeight: '600px', // Ajustado para acomodar mais campos
+  padding: '1rem', // Padding restaurado quando aberto
+};
+
+const iconStyles: React.CSSProperties = {
+  transition: 'transform 0.3s ease',
+  fontSize: '24px', // Tamanho padrão para ícones Material
+  color: 'var(--mdc-theme-on-surface, #000)', // Cor compatível com tema
+};
+
+const iconOpenStyles: React.CSSProperties = {
+  transform: 'rotate(180deg)', // Rotação do ícone quando aberto
+};
+
+// Estilo para ocultar campos
+const hiddenFieldStyles: React.CSSProperties = {
+  display: 'none',
+};
+
+// Opções de filtro de vídeo (mantidas como no original)
 const VIDEO_TRANSFORM_FILTER_OPTIONS = [
   { value: VideoFiltersCpuUtilization.Disabled, label: 'Disable Video Filter' },
   { value: VideoFiltersCpuUtilization.CPU10Percent, label: 'Video Filter CPU 10%' },
   { value: VideoFiltersCpuUtilization.CPU20Percent, label: 'Video Filter CPU 20%' },
   { value: VideoFiltersCpuUtilization.CPU40Percent, label: 'Video Filter CPU 40%' },
 ];
+
+interface CollapseProps {
+  title: string;
+  children: React.ReactNode;
+}
+
+const Collapse: React.FC<CollapseProps> = ({ title, children }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleCollapse = () => setIsOpen(!isOpen);
+
+  return (
+    <div style={collapseStyles}>
+      <div style={headerStyles} onClick={toggleCollapse}>
+        <span>{title}</span>
+        <span
+          style={{ ...iconStyles, ...(isOpen ? iconOpenStyles : {}) }}
+          className="material-symbols-outlined" // Classe do Material Icons
+        >
+          expand_more
+        </span>
+      </div>
+      <div style={{ ...contentStyles, ...(isOpen ? contentOpenStyles : {}) }}>
+        {children}
+      </div>
+    </div>
+  );
+};
 
 const MeetingForm: React.FC = () => {
   const meetingManager = useMeetingManager();
@@ -49,7 +127,7 @@ const MeetingForm: React.FC = () => {
     priorityBasedPolicy,
     keepLastFrameWhenPaused,
     isWebAudioEnabled,
-    videoTransformCpuUtilization: videoTransformCpuUtilization,
+    videoTransformCpuUtilization,
     setJoinInfo,
     isEchoReductionEnabled,
     toggleEchoReduction,
@@ -65,27 +143,25 @@ const MeetingForm: React.FC = () => {
     skipDeviceSelection,
     toggleMeetingJoinDeviceSelection,
   } = useAppState();
-  const [meetingErr, setMeetingErr] = useState(false);
+  const [, setMeetingErr] = useState(false);
   const [nameErr, setNameErr] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { errorMessage, updateErrorMessage } = useContext(getErrorContext());
   const navigate = useNavigate();
   const browserBehavior = new DefaultBrowserBehavior();
+  useEffect(() => {
+    if(meetingId.length > 0) {
+      handleJoinMeeting();
+    }
+  }, [meetingId]);
 
-  const handleJoinMeeting = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleJoinMeeting = async () => {
     const id = meetingId.trim().toLocaleLowerCase();
     const attendeeName = localUserName.trim();
 
     if (!id || !attendeeName) {
-      if (!attendeeName) {
-        setNameErr(true);
-      }
-
-      if (!id) {
-        setMeetingErr(true);
-      }
-
+      if (!attendeeName) setNameErr(true);
+      if (!id) setMeetingErr(true);
       return;
     }
 
@@ -144,130 +220,97 @@ const MeetingForm: React.FC = () => {
 
   return (
     <form>
-      <Heading tag="h1" level={4} css="margin-bottom: 1rem">
-        Join a meeting: 
-      </Heading>
-      <div
-        style={{display: 'none'}}
-        >
-      <FormField
-        field={Input}
-        label="Meeting Id"
-        value={meetingId}
-        infoText="Anyone with access to the meeting ID can join"
-        fieldProps={{
-          name: 'meetingId',
-          placeholder: 'Enter Meeting Id',
-        }}
-        errorText="Please enter a valid meeting ID"
-        error={meetingErr}
-        onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-          setMeetingId(e.target.value);
-          if (meetingErr) {
-            setMeetingErr(false);
-          }
-        }}
-      />
-      <FormField
-        field={Input}
-        label="Name"
-        value={localUserName}
-        fieldProps={{
-          name: 'name',
-          placeholder: 'Enter Your Name',
-        }}
-        errorText="Please enter a valid name"
-        error={nameErr}
-        onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-          setLocalUserName(e.target.value);
-          if (nameErr) {
-            setNameErr(false);
-          }
-        }}
-      />
-      <RegionSelection setRegion={setRegion} region={region} />
-      <FormField
-        field={Checkbox}
-        label="Join w/o Audio and Video (spectator mode)"
-        value=""
-        checked={meetingMode === MeetingMode.Spectator}
-        onChange={(): void => {
-          if (meetingMode === MeetingMode.Spectator) {
-            setMeetingMode(MeetingMode.Attendee);
-          } else {
-            setMeetingMode(MeetingMode.Spectator);
-          }
-        }}
-      />
-      <FormField
-        field={Checkbox}
-        label="Enable Web Audio"
-        value=""
-        checked={isWebAudioEnabled}
-        onChange={toggleWebAudio}
-        infoText="Enable Web Audio to use Voice Focus"
-      />
-      {/* Amazon Chime Echo Reduction is a premium feature, please refer to the Pricing page for details.*/}
-      {isWebAudioEnabled && (
+      <Collapse title="Advanced settings">
+        
+        <p style={{lineHeight: '150%', paddingBottom: '12px'}}>
+          Select advanced settings below. If you have any questions or need specific advanced configurations, contact the Slingui team.
+        </p>
+        <div style={hiddenFieldStyles}>
+          <FormField
+            field={Input}
+            label="Name"
+            value={localUserName}
+            fieldProps={{ name: 'name', placeholder: 'Enter Your Name' }}
+            errorText="Please enter a valid name"
+            error={nameErr}
+            onChange={(e: ChangeEvent<HTMLInputElement>): void => {
+              setLocalUserName(e.target.value);
+              if (nameErr) setNameErr(false);
+            }}
+          />
+        </div>
+        <RegionSelection setRegion={setRegion} region={region} />
         <FormField
           field={Checkbox}
-          label="Enable Echo Reduction"
+          label="Join w/o Audio and Video (spectator mode)"
           value=""
-          checked={isEchoReductionEnabled}
-          onChange={toggleEchoReduction}
-          infoText="Enable Echo Reduction (new meetings only)"
+          checked={meetingMode === MeetingMode.Spectator}
+          onChange={(): void => {
+            setMeetingMode(meetingMode === MeetingMode.Spectator ? MeetingMode.Attendee : MeetingMode.Spectator);
+          }}
         />
-      )}
-      {/* BlurSelection */}
-      {/* Background Video Transform Selections */}
-      <FormField
-        field={Select}
-        options={VIDEO_TRANSFORM_FILTER_OPTIONS}
-        onChange={(e: ChangeEvent<HTMLSelectElement>): void => {
-          setCpuUtilization(e.target.value);
-        }}
-        value={videoTransformCpuUtilization}
-        label="Background Filters CPU Utilization"
-      />
-      {/* Video uplink and downlink policies */}
-      {browserBehavior.isSimulcastSupported() && (
         <FormField
           field={Checkbox}
-          label="Enable Simulcast"
+          label="Enable Web Audio"
           value=""
-          checked={enableSimulcast}
-          onChange={toggleSimulcast}
+          checked={isWebAudioEnabled}
+          onChange={toggleWebAudio}
+          infoText="Enable Web Audio to use Voice Focus"
         />
-      )}
-
-      {browserBehavior.supportDownlinkBandwidthEstimation() && (
+        {isWebAudioEnabled && (
+          <FormField
+            field={Checkbox}
+            label="Enable Echo Reduction"
+            value=""
+            checked={isEchoReductionEnabled}
+            onChange={toggleEchoReduction}
+            infoText="Enable Echo Reduction (new meetings only)"
+          />
+        )}
+        <FormField
+          field={Select}
+          options={VIDEO_TRANSFORM_FILTER_OPTIONS}
+          onChange={(e: ChangeEvent<HTMLSelectElement>): void => {
+            setCpuUtilization(e.target.value);
+          }}
+          value={videoTransformCpuUtilization}
+          label="Background Filters CPU Utilization"
+        />
+        {browserBehavior.isSimulcastSupported() && (
+          <FormField
+            field={Checkbox}
+            label="Enable Simulcast"
+            value=""
+            checked={enableSimulcast}
+            onChange={toggleSimulcast}
+          />
+        )}
+        {browserBehavior.supportDownlinkBandwidthEstimation() && (
+          <FormField
+            field={Checkbox}
+            label="Use Priority-Based Downlink Policy"
+            value=""
+            checked={priorityBasedPolicy !== undefined}
+            onChange={togglePriorityBasedPolicy}
+          />
+        )}
         <FormField
           field={Checkbox}
-          label="Use Priority-Based Downlink Policy"
+          label="Keep Last Frame When Paused"
           value=""
-          checked={priorityBasedPolicy !== undefined}
-          onChange={togglePriorityBasedPolicy}
+          checked={keepLastFrameWhenPaused}
+          onChange={toggleKeepLastFrameWhenPaused}
         />
-      )}
-      <FormField
-        field={Checkbox}
-        label="Keep Last Frame When Paused"
-        value=""
-        checked={keepLastFrameWhenPaused}
-        onChange={toggleKeepLastFrameWhenPaused}
-      />
-      <FormField
-        field={Checkbox}
-        label="Skip meeting join device selection"
-        value=""
-        checked={skipDeviceSelection}
-        onChange={toggleMeetingJoinDeviceSelection}
-        infoText="Please select the devices manually to successfully join a meeting"
-      />
-      </div>
-
+        <FormField
+          field={Checkbox}
+          label="Skip meeting join device selection"
+          value=""
+          checked={skipDeviceSelection}
+          onChange={toggleMeetingJoinDeviceSelection}
+        />
+      </Collapse>
       <Flex container layout="fill-space-centered" style={{ marginTop: '2.5rem' }}>
-        {isLoading ? <Spinner /> : <PrimaryButton label="Continue" onClick={handleJoinMeeting} />}
+        {isLoading ? <Spinner /> : <></>}
       </Flex>
       {errorMessage && (
         <Modal size="md" onClose={closeError}>

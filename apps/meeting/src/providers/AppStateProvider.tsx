@@ -75,12 +75,12 @@ export function AppStateProvider({ children }: Props) {
   const [priorityBasedPolicy, setPriorityBasedPolicy] = useState<VideoPriorityBasedPolicy | undefined>(undefined);
   const [enableSimulcast, setEnableSimulcast] = useState(false);
   const [keepLastFrameWhenPaused, setKeepLastFrameWhenPaused] = useState(false);
-  const [isEchoReductionEnabled, setIsEchoReductionEnabled] = useState(false);
+  const [isEchoReductionEnabled, setIsEchoReductionEnabled] = useState(true);
   const [theme, setTheme] = useState(() => {
     const storedTheme = localStorage.getItem('theme');
-    return storedTheme || 'light';
+    return storedTheme || 'dark';
   });
-  const [videoTransformCpuUtilization, setCpuPercentage] = useState(VideoFiltersCpuUtilization.CPU40Percent);
+  const [videoTransformCpuUtilization, setCpuPercentage] = useState(VideoFiltersCpuUtilization.CPU20Percent);
   const [imageBlob, setImageBlob] = useState<Blob | undefined>(undefined);
   const [skipDeviceSelection, setSkipDeviceSelection] = useState(false);
   const [backgroundReplacementOption, setBackgroundReplacementOption] = useState<ReplacementOptions>(ReplacementOptions.Blue);

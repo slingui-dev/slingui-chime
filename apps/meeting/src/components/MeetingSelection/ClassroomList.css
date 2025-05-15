@@ -1,37 +1,73 @@
 .classroom-container {
-    font-family: Syne, sans-serif;
-    margin-top: 24px;
+  font-family: Syne, sans-serif;
 }
 
 .loading,
 .error {
-    text-align: center;
-    font-size: 18px;
+  text-align: center;
+  font-size: 18px;
 }
 
-.classroom-list {
-    list-style: none;
-    padding: 0;
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid var(--mdc-theme-surface-4);
 }
 
-.classroom-item {
-    display: flex;
-    align-items: center;
-    padding: 12px;
-    border-bottom: 1px solid #ddd;
-    cursor: pointer;
-    strong {
-
-        font-weight: 600;
-        margin-right: 12px;
-        font-size: 18px;
-    }
-    &:hover{
-        background-color: #0001;
-    }
+.no-classrooms {
+  text-align: center;
+  font-size: 16px;
+  color: var(--mdc-theme-on-surface, #000);
+  padding-top: 16px;
+  padding-bottom: 16px;
 }
 
-.classroom-icon,
-.info-icon {
-    margin-right: 10px;
+/* Estilização para o Card */
+.rmwc-card {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+/* Estilização para o título */
+.rmwc-typography--headline6 {
+  margin: 0;
+  font-weight: 600;
+}
+
+/* Estilização para o botão de refresh */
+.rmwc-icon-button {
+  color: #6200ee;
+}
+
+/* Estilização para a List */
+.rmwc-list-item {
+  cursor: pointer;
+  padding: 12px 16px;
+  border-bottom: 1px solid #ddd;
+  transition: background-color 0.2s;
+}
+
+.rmwc-list-item:hover:not(.rmwc-list-item--disabled) {
+  background-color: #f5f5f5;
+}
+
+.rmwc-list-item--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.rmwc-list-item__graphic {
+  margin-right: 16px;
+}
+
+.rmwc-list-item__primary-text {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.rmwc-list-item__secondary-text {
+  font-size: 14px;
+  color: #666;
 }
