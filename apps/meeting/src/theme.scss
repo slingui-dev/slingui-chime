@@ -16,10 +16,12 @@ $primary-palette: (
   400: #4e9ab4,
   500: #2f8099,
   600: #00677f,
-  700: $primary-color,
+  700: #003543,
   800: #001f28,
   900: #000000
 );
+$primary-color-dark: #86d1ec;
+
 
 // Paleta secundária
 $secondary-color: #006c4a;
@@ -151,11 +153,11 @@ $surface-dark-4: mix(map-get($primary-palette, 100), $surface-dark, 12%);
 // Tema dark
 .dark {
   // Cores primárias e secundárias
-  --mdc-theme-primary: #{map-get($primary-palette, 600)}; // #00677f
-  --mdc-theme-secondary: #{map-get($secondary-palette, 600)}; // #006c4a
-  --mdc-theme-error: #{map-get($error-palette, 600)}; // #b71752
-  --mdc-theme-success: #{map-get($success-palette, 600)}; // #006c4a
-  --mdc-theme-tertiary: #{map-get($tertiary-palette, 600)}; // #795900
+  --mdc-theme-primary: #{map-get($primary-palette, 200)}; // #00677f
+  --mdc-theme-secondary: #{map-get($secondary-palette, 200)}; // #006c4a
+  --mdc-theme-error: #{map-get($error-palette, 200)}; // #b71752
+  --mdc-theme-success: #{map-get($success-palette, 200)}; // #006c4a
+  --mdc-theme-tertiary: #{map-get($tertiary-palette, 200)}; // #795900
 
   // Superfície e fundo
   --mdc-theme-surface: #{$surface-dark}; // #1a1b23
@@ -176,23 +178,34 @@ $surface-dark-4: mix(map-get($primary-palette, 100), $surface-dark, 12%);
   --mdc-theme-surface-3: #{$surface-dark-3};
   --mdc-theme-surface-4: #{$surface-dark-4};
 
+
+  --mdc-filled-button-container-height: 42px;
+
   // Ajustes para componentes específicos
   .mdc-button {
     font-family: 'Syne', sans-serif;
     // Ajustar cor do texto para botões no tema dark
     color: #{$light-primary-text};
+    border-radius: 32px;
+    background: --mdc-theme-primary;
+    overflow: hidden;
 
     // Ajustar botões preenchidos
     &.mdc-button--raised,
     &.mdc-button--unelevated {
-      background-color: #{map-get($primary-palette, 600)};
-      color: #{$light-primary-text};
+      background-color: #{map-get($primary-palette, 200)};
+      color: #{map-get($primary-palette, 700)};
+      text-transform: none;
+      letter-spacing: 0px;
+      font-size: 16px;
     }
 
     // Ajustar botões outlined
     &.mdc-button--outlined {
       border-color: #{map-get($neutral-variant-palette, 300)}; // #adaaaa
       color: #{$light-primary-text};
+      text-transform: none;
+      letter-spacing: 0px;
     }
   }
 

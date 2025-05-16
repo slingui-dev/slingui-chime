@@ -7,6 +7,7 @@ import { Icon } from '@rmwc/icon';
 
 import './style.css';
 import './theme.scss';
+import '@rmwc/avatar/styles';
 import App from './app';
 import { AuthProvider } from 'react-oidc-context';
 import { authConfig } from './config/auth-config';

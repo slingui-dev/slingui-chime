@@ -28,56 +28,11 @@ import { useAppState } from '../../providers/AppStateProvider';
 import { MeetingMode, VideoFiltersCpuUtilization } from '../../types';
 import { MeetingManagerJoinOptions } from 'amazon-chime-sdk-component-library-react/lib/providers/MeetingProvider/types';
 import meetingConfig from '../../meetingConfig';
-
-const collapseStyles: React.CSSProperties = {
-  border: '1px solid var(--mdc-theme-surface-3, rgba(0, 0, 0, 0.12))',
-  borderRadius: '16px', // Aumentado para bordas mais arredondadas (Material 3)
-  marginTop: '1rem',
-  overflow: 'hidden',
-  fontFamily: 'var(--mdc-typography-font-family, Syne, sans-serif)', // Usando Syne do tema
-  backgroundColor: 'var(--mdc-theme-surface, #fff)', // Compatível com tema dark
-};
-
-const headerStyles: React.CSSProperties = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  padding: '24px',
-  cursor: 'pointer',
-  backgroundColor: 'var(--mdc-theme-surface, #fff)', // Compatível com tema dark
-  color: 'var(--mdc-theme-on-surface, #000)', // Ajustado para on-surface
-  fontSize: 'var(--mdc-typography-subtitle1-font-size, 1rem)',
-  fontWeight: 500,
-  transition: 'background-color 0.2s ease',
-  borderRadius: '16px 16px 0 0', // Arredondamento apenas no topo quando aberto
-};
-
-const contentStyles: React.CSSProperties = {
-  padding: '0 1rem', // Padding inicial zero para animação suave
-  backgroundColor: 'var(--mdc-theme-background, #fafafa)', // Compatível com tema dark
-  maxHeight: '0',
-  overflow: 'hidden',
-  transition: 'max-height 0.3s ease, padding 0.3s ease',
-};
-
-const contentOpenStyles: React.CSSProperties = {
-  maxHeight: '600px', // Ajustado para acomodar mais campos
-  padding: '1rem', // Padding restaurado quando aberto
-};
-
-const iconStyles: React.CSSProperties = {
-  transition: 'transform 0.3s ease',
-  fontSize: '24px', // Tamanho padrão para ícones Material
-  color: 'var(--mdc-theme-on-surface, #000)', // Cor compatível com tema
-};
-
-const iconOpenStyles: React.CSSProperties = {
-  transform: 'rotate(180deg)', // Rotação do ícone quando aberto
-};
+import { Collapse } from '../../components/Collapse';
 
 // Estilo para ocultar campos
 const hiddenFieldStyles: React.CSSProperties = {
-  display: 'none',
+    display: 'none',
 };
 
 // Opções de filtro de vídeo (mantidas como no original)
@@ -87,34 +42,6 @@ const VIDEO_TRANSFORM_FILTER_OPTIONS = [
   { value: VideoFiltersCpuUtilization.CPU20Percent, label: 'Video Filter CPU 20%' },
   { value: VideoFiltersCpuUtilization.CPU40Percent, label: 'Video Filter CPU 40%' },
 ];
-
-interface CollapseProps {
-  title: string;
-  children: React.ReactNode;
-}
-
-const Collapse: React.FC<CollapseProps> = ({ title, children }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleCollapse = () => setIsOpen(!isOpen);
-
-  return (
-    <div style={collapseStyles}>
-      <div style={headerStyles} onClick={toggleCollapse}>
-        <span>{title}</span>
-        <span
-          style={{ ...iconStyles, ...(isOpen ? iconOpenStyles : {}) }}
-          className="material-symbols-outlined" // Classe do Material Icons
-        >
-          expand_more
-        </span>
-      </div>
-      <div style={{ ...contentStyles, ...(isOpen ? contentOpenStyles : {}) }}>
-        {children}
-      </div>
-    </div>
-  );
-};
 
 const MeetingForm: React.FC = () => {
   const meetingManager = useMeetingManager();

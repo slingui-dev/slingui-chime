@@ -73,7 +73,7 @@ export function AppStateProvider({ children }: Props) {
   const [localUserName, setLocalUserName] = useState('');
   const [isWebAudioEnabled, setIsWebAudioEnabled] = useState(true);
   const [priorityBasedPolicy, setPriorityBasedPolicy] = useState<VideoPriorityBasedPolicy | undefined>(undefined);
-  const [enableSimulcast, setEnableSimulcast] = useState(false);
+  const [enableSimulcast, setEnableSimulcast] = useState(true);
   const [keepLastFrameWhenPaused, setKeepLastFrameWhenPaused] = useState(false);
   const [isEchoReductionEnabled, setIsEchoReductionEnabled] = useState(true);
   const [theme, setTheme] = useState(() => {

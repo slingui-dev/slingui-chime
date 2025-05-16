@@ -3,19 +3,17 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  PrimaryButton,
-  Flex,
-  Label,
-  useMeetingManager,
-  Modal,
-  ModalBody,
-  ModalHeader,
-} from 'amazon-chime-sdk-component-library-react';
+import { Button } from '@rmwc/button';
+import { Typography } from '@rmwc/typography';
+import '@rmwc/button/styles';
+import '@rmwc/typography/styles';
+import { useMeetingManager } from 'amazon-chime-sdk-component-library-react';
 
 import routes from '../constants/routes';
 import Card from '../components/Card';
 import { useAppState } from '../providers/AppStateProvider';
+import { Modal, ModalBody, ModalHeader } from 'amazon-chime-sdk-component-library-react';
+import { Icon } from 'rmwc';
 
 const MeetingJoinDetails = () => {
   const meetingManager = useMeetingManager();
@@ -39,17 +37,24 @@ const MeetingJoinDetails = () => {
 
   return (
     <>
-      <Flex container alignItems="center" flexDirection="column">
-        <PrimaryButton
-          label={isLoading ? 'Loading...' : 'Join meeting'}
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'end', gap: '1rem' }}>
+        <Typography use="body1" tag="p" style={{ marginTop: "24px" }}>
+          Joining classroom as <b>{localUserName}</b>
+        </Typography>
+        <div>
+
+        <Button
+          unelevated
           onClick={handleJoinMeeting}
-        />
-        <Label style={{ margin: '.75rem 0 0 0' }}>
-          Joining meeting <b>{meetingId}</b> as <b>{localUserName}</b>
-        </Label>
-      </Flex>
+          disabled={isLoading}
+          icon={<Icon className="material-symbols-outlined" icon="arrow_forward" />}
+        >
+          {isLoading ? 'Loading...' : 'Join class'}
+        </Button>
+        </div>
+      </div>
       {error && (
-        <Modal size="md" onClose={(): void => setError('')}>
+        <Modal size="md" onClose={() => setError('')}>
           <ModalHeader title={`Meeting ID: ${meetingId}`} />
           <ModalBody>
             <Card

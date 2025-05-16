@@ -35,23 +35,21 @@ export const StyledWrapper = styled.div`
     }
 
     @media (max-height: 800px) {
-      padding: 2rem 0 2rem;
+      padding: 1rem 0 1rem;
     }
   }
 `;
 
 export const StyledAudioGroup = styled.div`
-  padding: 0 3rem 0 0;
-  border-right: 0.125rem solid #e6e6e6;
-
   @media (max-width: 900px) {
-    padding: 2rem 0 2rem 0;
     border-right: unset;
+    padding-left: 4px!important;
+    padding: 4px!important;
   }
 `;
 
 export const StyledVideoGroup = styled.div`
-  padding: 0 0 0 3rem;
+  padding: 0 0 0;
 
   @media (max-width: 900px) {
     padding: 0;
