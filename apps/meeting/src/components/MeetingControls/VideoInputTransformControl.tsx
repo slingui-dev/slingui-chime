@@ -10,7 +10,6 @@ import {
   useVideoInputs,
   useLocalVideo,
   ControlBarButton,
-  Camera,
   Spinner,
   PopOverItem,
   PopOverSeparator,
@@ -180,7 +179,7 @@ const VideoInputTransformControl: React.FC<Props> = ({
         const blob = await createBlob(selectedOption);
         logger.info(`Video filter changed to Replacement - ${selectedOption.label}`);
         await changeBackgroundReplacementImage(blob);
-        setBackgroundReplacementOption(selectedOption.label); 
+        setBackgroundReplacementOption(selectedOption.label);
       } else {
         logger.error(`Error: Cannot find ${replacementOption} in the replacementOptionsList: ${replacementOptionsList}`);
       }
@@ -312,7 +311,9 @@ const VideoInputTransformControl: React.FC<Props> = ({
 
   return (
     <ControlBarButton
-      icon={<Camera disabled={!isVideoEnabled} />}
+      icon={
+        isVideoEnabled ? <i className="material-symbols-outlined">videocam</i> : <i className="material-symbols-outlined">videocam_off</i>
+      }
       onClick={toggleVideo}
       label={label}
     >

@@ -6,7 +6,6 @@ import React from 'react';
 import {
   Flex,
   Heading,
-  PrimaryButton
 } from 'amazon-chime-sdk-component-library-react';
 
 import { useAppState } from '../../providers/AppStateProvider';
@@ -19,18 +18,18 @@ const MeetingDetails = () => {
     <Flex container layout="fill-space-centered">
       <Flex>
         <Heading level={4} tag="h1">
-          Meeting information
+          Classroom information
         </Heading>
         <StyledList>
           <div>
-            <dt>Meeting ID</dt>
+            <dt>Classroom ID</dt>
             <dd>{meetingId}</dd>
           </div>
         </StyledList>
-        <PrimaryButton
+        {/* <PrimaryButton
           label={theme === 'light' ? 'Dark mode' : 'Light mode'}
           onClick={toggleTheme}
-        ></PrimaryButton>
+        ></PrimaryButton> */}
       </Flex>
     </Flex>
   );

@@ -5,7 +5,6 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   ControlBarButton,
-  Phone,
   Modal,
   ModalBody,
   ModalHeader,
@@ -43,7 +42,7 @@ const EndMeetingControl: React.FC = () => {
 
   return (
     <>
-      <ControlBarButton icon={<Phone />} onClick={toggleModal} label="Leave" />
+      <ControlBarButton icon={<i className="material-symbols-outlined">call_end</i>} onClick={toggleModal} label="Leave" />
       {showModal && (
         <Modal size="md" onClose={toggleModal} rootId="modal-root">
           <ModalHeader title="End Meeting" />

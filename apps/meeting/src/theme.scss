@@ -288,6 +288,44 @@ $surface-dark-4: mix(map-get($primary-palette, 100), $surface-dark, 12%);
   font-family: 'Syne', sans-serif;
 }
 
+.videos {
+  background: var(--mdc-theme-surface) !important;
+}
+
+.controls {
+  border-radius: 16px !important;
+  bottom: 0.5rem;
+}
+
+.ch-control-bar-item-iconButton {
+  border-radius: 24px !important;
+  width: 48px !important;
+  transition: 0.2s all ease-in-out;
+  color: var(--mdc-theme-on-surface) !important;
+}
+
+.ch-control-bar-item-iconButton:hover,
+.ch-control-bar-item-caret:hover {
+  background-color: var(--mdc-theme-primary) !important;
+  color: var(--mdc-theme-on-primary) !important;
+}
+
+.ch-control-bar-item-iconButton i {
+  font-size: 23px;
+}
+
+.ch-control-bar-item-caret {
+  width: 1.25rem;
+  height: 1.25rem;
+  padding: 0;
+  margin-left: 10px;
+  margin-top: 16px;
+}
+
+.ch-control-bar-item-label {
+  margin-top: 6px;
+}
+
 // Imports dos componentes Material Design
 @import "@material/button/mdc-button";
 @import "@material/icon-button/mdc-icon-button";

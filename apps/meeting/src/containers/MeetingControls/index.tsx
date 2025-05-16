@@ -10,7 +10,6 @@ import {
   AudioOutputControl,
   ControlBarButton,
   useUserActivityState,
-  Dots,
   VideoInputControl,
 } from 'amazon-chime-sdk-component-library-react';
 
@@ -43,7 +42,7 @@ const MeetingControls: React.FC = () => {
       >
         <ControlBarButton
           className="mobile-toggle"
-          icon={<Dots />}
+          icon={<i className="material-symbols-outlined">menu</i>}
           onClick={handleToggle}
           label="Menu"
         />

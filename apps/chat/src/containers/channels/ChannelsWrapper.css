@@ -33,7 +33,7 @@ button.ch-sts-popover-toggle.ch-popover-toggle {
 }
 
 button.ch-sts-popover-toggle.ch-popover-toggle:hover {
-  background-color: #004ddb;
+  background-color: var(--mdc-theme-secondary);
 }
 
 li.separator {
